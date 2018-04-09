@@ -1,6 +1,6 @@
 <?php
 
-require_once 'class-traklight-api-wrapper-base.php';
+require_once 'lib/class-traklight-api-wrapper-base.php';
 
 class TraklightApiWrapper extends TraklightApiWrapperBase {
 
