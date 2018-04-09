@@ -38,4 +38,14 @@ class TraklightApiWrapper extends TraklightApiWrapperBase {
 	public function createUser($attrs) {
 		return $this->post('/api/v1/users/',$attrs);
 	}
+
+	/**
+	 * Automatically log a user into their Traklight dashboard
+	 *
+	 * @return string | URL of the logged in session
+	 */
+	public function getSessionUrl($email) {
+		$result = $this->get('/api/v1/login/', Array('email' => $email));
+		return $this->baseUrl().'/api/v1/login/session/'.$result['sid'];
+	}
 }

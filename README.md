@@ -1,8 +1,8 @@
 # Traklight PHP API Wrapper
 
-This is a simple PHP wrapper for the [Traklight](https://www.traklight.com/) API. 
+This is a simple PHP wrapper for the [Traklight](https://www.traklight.com/) API.
 
-## Usage 
+## Usage
 ### Initialize Wrapper
 
     $tk = new TraklightApiWrapper('your_subdomain','your_auth_key');
@@ -27,10 +27,22 @@ This is a simple PHP wrapper for the [Traklight](https://www.traklight.com/) API
       'password'     => 'foobarFB1',         # required
       'phoneNumber'  => '555-555-555',       # optional  default "555-555-5555"
       'postalCode'   => '85003',             # optional  default "00000"
-      'countryCode'  => 'US',                # required            
-    )); 
+      'countryCode'  => 'US',                # required
+    ));
     var_dump($user);
 
 - **timeZone** - must be a value from the [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-- **password** - minLength=8, minNumLower=1, minNumUpper=1, minNumDigit=1 
+- **password** - minLength=8, minNumLower=1, minNumUpper=1, minNumDigit=1
 - **countryCode** - must be 2 character ISO code
+
+### Automatically log a user into their Traklight Dashboard
+
+    <?php $url = $tk->getSessionUrl('joe@example.com'); ?>
+    <iframe
+	id="traklight_iframe"
+	style="height: 100%; width: 100%"
+	src="<?= $url ?>"
+	name="traklight_app"
+	sandbox="allow-same-origin allow-forms allow-scripts allow-popups allow-top-navigation"
+	seamless>
+    </iframe>

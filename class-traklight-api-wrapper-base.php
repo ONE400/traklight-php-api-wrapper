@@ -7,13 +7,15 @@ class TraklightApiWrapperBase {
 	public $useStaging = false;
 	protected $curl;
 
-	protected function baseUri() {
+	public function baseUrl() {
 		$sd = ($this->useStaging) ? 'staging':'apps';
 		return "https://{$this->subdomain}.{$sd}.traklight.com";
 	}
 
-	protected function get($url) {
-		$url = $this->baseUri().$url.'?ak='.$this->authKey;
+	protected function get($url, $params=Array()) {
+		$params = array_merge($params, Array('ak' => $this->authKey));
+		$query_str = http_build_query($params);
+		$url = $this->baseUrl().$url.'?'.$query_str;
 		$this->curl = curl_init($url);
 		curl_setopt($this->curl, CURLOPT_TIMEOUT, 5);
 		curl_setopt($this->curl, CURLOPT_CONNECTTIMEOUT, 5);
@@ -27,7 +29,7 @@ class TraklightApiWrapperBase {
 
 	protected function post($url, $params=Array()) {
 		$json_data = json_encode($params);
-		$url = $this->baseUri().$url.'?ak='.$this->authKey;
+		$url = $this->baseUrl().$url.'?ak='.$this->authKey;
 		$this->curl = curl_init($url);
 		curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'POST');
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, $json_data);
@@ -48,7 +50,7 @@ class TraklightApiWrapperBase {
 	protected function checkRespErrors($resp) {
 		if(curl_errno($this->curl)) {
 			throw new TraklightException(
-				curl_error($this->curl), 
+				curl_error($this->curl),
 				curl_errno($this->curl)
 			);
 		}
