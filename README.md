@@ -1,6 +1,6 @@
 # Traklight PHP API Wrapper
 
-This is a simple PHP wrapper for the [Traklight](https://www.traklight.com/) API.
+This is a simple PHP wrapper for the [Traklight](https://www.traklight.com/) API. This wrapper supports creating users and auto-logging users into their Traklight dashboard.
 
 ## Usage
 ### Initialize Wrapper
